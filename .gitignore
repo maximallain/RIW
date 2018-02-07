@@ -98,4 +98,25 @@ ENV/
 /site
 
 # mypy
-.mypy_cache/
+.mypy_cache
+
+#Data CS276
+Data/CS276/0
+Data/CS276/1
+Data/CS276/2
+Data/CS276/3
+Data/CS276/4
+Data/CS276/5
+Data/CS276/6
+Data/CS276/7
+Data/CS276/8
+Data/CS276/9
+*.DS_Store
+Data/CS276/Result_*
+.idea/
+Archives/
+*.pdf
+Questions_exercice1/
+Results/
+TODO.md
+*.docx
