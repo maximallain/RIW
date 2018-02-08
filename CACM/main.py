@@ -1,6 +1,6 @@
 from CACM.A_collection_treatment import collection_treatment
+from CACM.B_heap_law import statistics
 from CACM.D_boolean_search import boolean_main, boolean_search
-
 
 from pickle import dump, load
 from time import time
@@ -91,11 +91,22 @@ print(b_not_search("program", collection))
 print(spelling_out_request("computer+program+systems", collection))
 """
 
-
-print("////////////////////////////////")
-print("///// COLLECTION TREATMENT /////")
-print("////////////////////////////////")
+######## MAIN ########
+"""
+print("////////////////////////////////////")
+print("/////// COLLECTION TREATMENT ///////")
+print("////////////////////////////////////")
 time1 = time()
 collection_treatment()
 time2 = time()
 print("Collection's treatment execution : %.3f secondes" %(time2-time1))
+"""
+
+print("////////////////////////////////////")
+print("// TOKEN & VOCABULARY'S STATISTIC //")
+print("////////////////////////////////////")
+statistics()
+
+print("////////////////////////////////////")
+print("////////// BOOLEAN INDEX ///////////")
+print("////////////////////////////////////")

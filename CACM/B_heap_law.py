@@ -1,21 +1,23 @@
-import pickle
+from CACM.A_collection_treatment import lecture_doc, separate_doc
+from Functions.functions import calcul_of_b, calcul_of_k, calcul_de_voc, list_plot, logList
+from CACM.models.collection_class import Collection
+
+from pickle import dump, load
 import matplotlib.pyplot as plt
 
-from CACM.models.collection_class import Collection
-from CACM.tokenization import separate_doc, tokenization, lecture_doc
-from Functions.functions import calcul_of_b, calcul_of_k, calcul_de_voc, list_plot, logList, create_collection_div_by_2
-from CACM.models.collection_class import Collection
+def statistics() :
+    """Calculation of heap law's coefficients k & b"""
+    #create_collection_div_by_2()
 
-#create_collection_div_by_2()
-
-def answer_question() :
-    path_pickle = "../Data/CACM/collection_without_index.pickle"
-    path_pickle_div2 = "../Data/CACM/collection_div_by_2.pickle"
+    # Lecture of the two collections
+    path_pickle = "../Data/CACM/intermediate/collection_without_index.pickle"
+    path_pickle_div2 = "../Data/CACM/intermediate/collection_div_by_2.pickle"
     with open(path_pickle, 'rb') as f:
-        collection = pickle.load(f)
-
+        collection = load(f)
     with open(path_pickle_div2, 'rb') as f:
-        collection_div2 = pickle.load(f)
+        collection_div2 = load(f)
+
+    # Vocabulary and Token's number
     tok1 = collection.tokens_number()
     voc1 = collection.vocabulary_size
     tok2 = collection_div2.tokens_number()
@@ -33,18 +35,37 @@ def answer_question() :
     tok3 = 1000000
     voc3 = int(calcul_de_voc(tok3,k,b))
     print("Question 4\nSupposons le nombre de token a un million, nous trouvons une taille de vocabulaire de "+str(voc3))
-
     list_to_plot = list_plot(collection.vocabulary)
-
-    print(list_to_plot[0])
-    print(list_to_plot[1])
     list_log0 = logList(list_to_plot[0])
     list_log1 = logList(list_to_plot[1])
     plt.plot(list_to_plot[0], list_to_plot[1])
-    plt.ylabel('CACM : frequence vs rang')
+    plt.title('CACM : frequence vs rang')
     plt.show()
-    print(list_log0)
-    print(list_log1)
     plt.plot(list_log0, list_log1)
-    plt.ylabel('CACM : log(frequence) vs log(rang)')
+    plt.title('CACM : log(frequence) vs log(rang)')
     plt.show()
+
+def create_collection_div_by_2(path_r_div = "../Data/CACM/intermediate/cacm.div_by_2",
+                               path_w_div="../Data/CACM/intermediate/useful_cacm.div_by_2",
+                               path_pickle_div="../Data/CACM/intermediate/collection_div_by_2.pickle"
+                               ):
+    text_res = []
+    with open("../Data/CACM/cacm.all", "r") as file:
+        temp = file.read()
+        text_res.append(temp)
+        text_res[0] = text_res[0][:len(text_res[0]) // 2]
+    with open(path_r_div, 'w') as written:
+        written.write(text_res[0])
+    lecture_doc(path_r_div, path_w_div)
+    collection_div2 = Collection()
+    list_doc = separate_doc(path_w_div)
+    for doc in list_doc:
+        collection_div2.add_doc(doc)
+        doc.tokenization()
+        doc.vocabulary_update()
+        collection_div2.add_tokens(doc.tokens)
+    collection_div2.vocabulary_update()
+    collection_div2.create_termID_term()
+    collection_div2.create_docID_doc()
+    with open(path_pickle_div, 'wb') as f:
+        dump(collection_div2, f)

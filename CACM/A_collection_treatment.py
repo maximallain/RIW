@@ -11,7 +11,7 @@ def collection_treatment(path = "../Data/CACM/cacm.all") :
 
     # We separate the documents and we stock them in a list
     list_doc = separate_doc(intermediate_path)
-    
+
     # Once separated, we create the document objects, then we add them to the collection
     collection = Collection()
     for doc in list_doc :
