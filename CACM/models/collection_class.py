@@ -9,8 +9,8 @@ class Collection() :
         self.tokens_list = []
         self.vocabulary = None
         self.vocabulary_size = None
-        self.term_termID = None
-        self.doc_docID = None
+        self.termID_term = None
+        self.docID_doc = None
         self.reversed_index = None
 
 
@@ -31,19 +31,19 @@ class Collection() :
         self.vocabulary = vocabulary(self.tokens_list)
         self.vocabulary_size = len(self.vocabulary)
 
-    def create_term_termID(self):
+    def create_termID_term(self):
         dict_res = {}
         id = 1
         for elt in self.vocabulary.keys():
             dict_res[id] = elt
             id += 1
-        self.term_termID = dict_res
+        self.termID_term = dict_res
 
-    def create_doc_docID(self):
+    def create_docID_doc(self):
         dict_res = {}
         for doc in self.doc_list:
             dict_res[doc.id] = doc
-        self.doc_docID = dict_res
+        self.docID_doc = dict_res
 
     def list_docID_all(self):
         res = []
@@ -58,13 +58,13 @@ class Collection() :
         return 0
 
     def id_term_method(self, term_searched):
-        for id, term in self.term_termID.items():
+        for id, term in self.termID_term.items():
             if term == term_searched:
                 return id
         return -1
 
     def create_reversed_index_boolean(self):
-        list = list_termID_docID(self.term_termID, self.doc_docID)
+        list = list_termID_docID(self.termID_term, self.docID_doc)
         dict_res = {}
         for elt in list :
             if elt[0] not in dict_res :
@@ -74,7 +74,7 @@ class Collection() :
         self.reversed_index = dict_res
 
     def create_reversed_index_vectorial(self):
-        list = list_termID_docID_frequence(self.term_termID, self.doc_docID)
+        list = list_termID_docID_frequence(self.termID_term, self.docID_doc)
         dict_res = {}
         for elt in list:
             if elt[0] not in dict_res:

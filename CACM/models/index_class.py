@@ -7,7 +7,7 @@ class Index() :
         self.index = None
 
     def create_reversed_index_booelean(self):
-        list = list_termID_docID(self.collection.term_termID,self.doc_docID)
+        list = list_termID_docID(self.collection.termID_term,self.docID_doc)
         dict_res = {}
         for elt in list:
             if elt[0] not in dict_res:
