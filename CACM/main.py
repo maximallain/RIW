@@ -1,11 +1,12 @@
-from CACM.boolean_search import boolean_main, boolean_search
-from CACM.vectorial_search import vectorial_search
+from CACM.A_collection_treatment import collection_treatment
+from CACM.D_boolean_search import boolean_main, boolean_search
+
 
 from pickle import dump, load
 from time import time
 
 #BOOLEAN INDEX
-
+"""
 answer = ''
 while answer not in ['o','n'] :
     answer = input("Voulez-vous recréer l'index inversé ? (o/n)\n").lower()
@@ -25,7 +26,7 @@ with open('../Data/CACM/collection_with_boolean_index', 'rb') as f:
 res1 = boolean_search("graph", collection)
 print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(len(res1), "graph"))
 for elt in res1 :
-    print(collection.doc_docID[elt])
+    print(collection.docID_doc[elt])
 
 # VECTORIAL INDEX
 answer = ''
@@ -59,14 +60,14 @@ number = answer
 res1 = vectorial_search("graph", collection, number)
 print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(len(res1), "graph"))
 for elt in res1 :
-    print(collection.doc_docID[elt[0]])
+    print(collection.docID_doc[elt[0]])
 
 
 #boolean_main(collection)
-
+"""
 """
 # TEST
-print(collection.term_termID)
+print(collection.termID_term)
 for doc in collection.doc_list :
     print(doc.id)
     print(doc.tokens)
@@ -90,3 +91,11 @@ print(b_not_search("program", collection))
 print(spelling_out_request("computer+program+systems", collection))
 """
 
+
+print("////////////////////////////////")
+print("///// COLLECTION TREATMENT /////")
+print("////////////////////////////////")
+time1 = time()
+collection_treatment()
+time2 = time()
+print("Collection's treatment execution : %.3f secondes" %(time2-time1))
