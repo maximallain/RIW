@@ -14,7 +14,7 @@ def boolean_main(collection) :
     else :
         print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(collection_doc.__len__(),term_searched))
         for docID in collection_doc :
-            print(collection.doc_docID[docID])
+            print(collection.docID_doc[docID])
     print("\n- - - - -\n/// Requête bouléenne ///")
     request = input("Entrez une expression normale conjonctive sous le format ci-dessous.\nAND : * ; OR : + ; NOT : -\nExemple : 1*2+3*4+-5 qui signifie 1 AND (2 OR 3) AND (4 OR NOT(5))\n").lower()
     time1 = time()
@@ -26,7 +26,7 @@ def boolean_main(collection) :
     else :
         print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(collection_doc.__len__(), request))
         for docID in collection_doc :
-            print(collection.doc_docID[docID])
+            print(collection.docID_doc[docID])
 
 def spelling_out_request(request, collection):
     conjunction_list = request.split("*")
@@ -161,18 +161,18 @@ print(res3)
 collection_doc1 = spelling_out_request(req1, collection)
 print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(collection_doc1.__len__(), req1))
 for docID in collection_doc1:
-    print(collection.doc_docID[docID])
+    print(collection.docID_doc[docID])
 
 collection_doc2 = spelling_out_request(req2, collection)
 collection_doc2bis = b_or_search("systems","program",collection)
 print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(collection_doc2.__len__(), req2))
 for docID in collection_doc2:
-    print(collection.doc_docID[docID])
+    print(collection.docID_doc[docID])
 collection_doc3 = spelling_out_request(req3, collection)
 print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(collection_doc3.__len__(), req3))
 for docID in collection_doc3:
-    print(collection.doc_docID[docID])
+    print(collection.docID_doc[docID])
 collection_doc4 = merge_sorted_list(collection_doc1,collection_doc2)
 print("Doit correspondre avec {}".format(len(collection_doc4)))
 for docID in collection_doc4:
-    print(collection.doc_docID[docID])"""
+    print(collection.docID_doc[docID])"""

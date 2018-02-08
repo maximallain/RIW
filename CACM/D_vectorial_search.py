@@ -6,8 +6,7 @@ from time import time
 def main_vectorial(collection) :
     answer = ''
     while answer not in [1, 2, 3]:
-        query = input("Entrez une requête sous la forme d'une suite de termes séparés par des espaces :\n"
-                      "exemple : 'terme1 terme2'\n")
+        query = input("Entrez une requête sous la forme d'une suite de termes séparés par des espaces :\n")
         answer = input("Quelle type de pondération souhaitez-vous tester ?\n"
                        "1 - tf_idf\n"
                        "2 - tf_idf normalisé\n"
@@ -20,7 +19,6 @@ def main_vectorial(collection) :
     time1 = time()
     res = query_search(query = query, collection = collection, number = number)
     time2 = time()
-    print('Temps de la requête : %.3f seconde(s)' %(time2-time1))
     if len(res) == 0:
         print("Il n'y a pas de document correspondant à votre recherche.")
     else:
@@ -29,7 +27,7 @@ def main_vectorial(collection) :
         for docID in res:
             if i == 9 :
                 break
-            print(collection.doc_docID[docID[0]])
+            print(collection.docID_doc[docID[0]])
             i +=1
 
 
@@ -78,8 +76,8 @@ def term_search(term, collection, number):
     dict_docID_weight = {}
     for elt in list_tuple_docID_frequence :
         tf_td = elt[1]
-        max_frequency = collection.doc_docID[elt[0]].max_frequency()
-        doc_len = collection.doc_docID[elt[0]].tokens_number()
+        max_frequency = collection.docID_doc[elt[0]].max_frequency()
+        doc_len = collection.docID_doc[elt[0]].tokens_number()
         dict_docID_weight[int(elt[0])] = weight(N, tf_td, dft, doc_len, max_frequency, number)
     sorted_list = sorted(dict_docID_weight.items(), reverse=True, key=operator.itemgetter(1))
     return sorted_list
@@ -103,7 +101,6 @@ def normalized_frequence(tf_td, max_tf_in_doc) :
     return tf_td/max_tf_in_doc
 
 
-#boolean_main(collection)
 
 """
 path = "../Data/CACM/cacm.all"
@@ -123,6 +120,7 @@ with open('../Data/CACM/collection_with_weight_index.pickle', 'rb') as f:
 
 main_vectorial(collection)
 
+""" TEST A SUPPRIMER
 query = "algorithm computer time"
 number = 1
 dict_to_print = query_search(query,collection,number)
@@ -132,8 +130,4 @@ list = [(1,0.5798),(2,0.5646), (3,0.829)]
 dict = {"size" : 3, "docID_weight" : {1 : [0,0.5,0.6], 2 : [0.2,0.4,0.8]}}
 add_list_in_dict(dict, list)
 print(dict)
-
-# COLLECTION
-#print("Collection.term_termID = {} ".format(collection.term_termID))
-#print("Collection.doc_docID = {} ".format(collection.doc_docID))
-#print("Collection.reversed_index = {}".format(collection.reversed_index))
+"""
