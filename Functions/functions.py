@@ -4,7 +4,6 @@ import os
 import math
 from nltk import word_tokenize
 
-
 def lecture(num_directory):
     texts_res = []
     dir = "Data/CS276/" + str(num_directory)
@@ -45,7 +44,7 @@ def majuscule_to_minuscule(list_words):
     return res
 
 
-def tokenisation(file):
+def tokenization(file):
     with open(file, "r") as fichier_lu:
         texte = fichier_lu.read()
         list_res = word_tokenize(texte)
@@ -67,10 +66,11 @@ def sup_common_words(list) :
         return(res)
 
 def list_plot(dict_voc):
+    sorted_list = sorted(dict_voc.items(), reverse=True, key=operator.itemgetter(1))
     list_res_frequence = []
     list_res_rang = []
     i = 1
-    for e in dict_voc :
+    for e in sorted_list :
         list_res_frequence.append(e[1])
         list_res_rang.append(i)
         i = i + 1
@@ -101,47 +101,19 @@ def divide_a_file(file, name_file_created):
             print(text2.__len__())
             fichier_ecrit.write(text2)
 
-def list_termID_docID(term_termID, doc_docID) :
+def list_termID_docID(termID_term, docID_doc) :
     tuple_list = []
-    for id_term, term in term_termID.items() :
-        for id_doc, doc in doc_docID.items() :
+    for id_term, term in termID_term.items() :
+        for id_doc, doc in docID_doc.items() :
             if term in doc.tokens :
                 tuple_list.append((id_term,id_doc))
     return tuple_list
 
-def list_termID_docID_frequence(term_termID, doc_docID) :
+def list_termID_docID_frequence(termID_term, docID_doc) :
     tuple_list = []
-    for id_term, term in term_termID.items() :
-        for id_doc, doc in doc_docID.items() :
+    for id_term, term in termID_term.items() :
+        for id_doc, doc in docID_doc.items() :
             if term in doc.vocabulary :
                 tuple_list.append((id_term,id_doc,doc.vocabulary[term]))
     return tuple_list
 
-
-def create_collection_div_by_2():
-    path_r_div = "../Data/CACM/cacm.div_by_2"
-    path_w_div = "../Data/CACM/useful_cacm.div_by_2"
-    path_pickle_div = "../Data/CACM/collection_div_by_2.pickle"
-    text_res = []
-    with open("../Data/CACM/cacm.all", "r") as file:
-        temp = file.read()
-        text_res.append(temp)
-        print(text_res[0].__len__())
-        text_res[0] = text_res[0][:len(text_res[0]) // 2]
-        print(text_res[0].__len__())
-
-    with open(path_r, 'w') as written:
-        written.write(text_res[0])
-
-    lecture_doc(path_r, path_w)
-    collection = Collection()
-    list_doc = separate_doc(path_w)
-    for doc in list_doc:
-        collection.doc_list.append(doc)
-        tuple_num_token = tokenization(doc)
-        collection.add_tokens(doc.tokens)
-
-    collection.vocabulary_update()
-    collection.create_term_termID()
-    collection.create_doc_docID()
-    collection.create_reversed_index()
