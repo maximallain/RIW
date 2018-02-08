@@ -117,7 +117,7 @@ def intersection_list(list1, list2):
             list2=list2[1:]
     return res
 
-answer = ''
+"""answer = ''
 while answer not in ['o','n'] :
     answer = input("Voulez-vous recréer l'index inversé ? (o/n)").lower()
     if answer == 'o' :
@@ -141,7 +141,7 @@ with open('../Data/CACM/collection_with_boolean_index', 'rb') as f:
 boolean_main(collection)
 
 
-"""
+
 # TESTS
 print(len(boolean_search("computer", collection)))
 print(len(boolean_search("systems", collection)))
