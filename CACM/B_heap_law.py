@@ -34,14 +34,14 @@ def statistics() :
     b = calcul_of_b(voc1,voc2,tok1,tok2)
     k = calcul_of_k(voc1,tok1,b)
     print("Nous avons alors les coefficients b et k de la loi de Heap ci dessous :\n"
-          "b = " + str(b))
-    print("k : " + str(k)+"\n")
+          "b = %.3f" %b)
+    print("k : %.3f\n" %k)
 
     # Vocabulary size's calculation for a 1 million tokens' collection
     tok3 = 1000000
     voc3 = int(calcul_de_voc(tok3,k,b))
     print("Question 4\n"
-          "Supposons le nombre de token a un million, nous trouvons une taille de vocabulaire de "+str(voc3))
+          "Supposons le nombre de token a un million, nous trouvons une taille de vocabulaire de "+str(voc3)+"\n")
 
     # Plot
     list_to_plot = list_plot(collection.vocabulary)

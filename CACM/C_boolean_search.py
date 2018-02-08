@@ -1,34 +1,70 @@
 from time import time
-import pickle
+from pickle import dump, load
 
-def boolean_main(collection) :
-    print("/// Bienvenue dans le meilleur moteur de recherche de la planète. ///")
-    print("- - - - -\n/// Recherche d'un seul mot ///")
+def boolean_main() :
+    """Main function of the boolean model"""
+
+    # Index's creation
+    collection = index_creation()
+
+    # One word request
+    print("- - - - -\n"
+          "/// Recherche d'un seul mot ///")
     term_searched = input("Entrez un mot :\n").lower()
+
+    # Search
     time1 = time()
     collection_doc = boolean_search(term_searched, collection)
     time2 = time()
-    print('Temps de la requête : %.2f seconde(s)' %(time2-time1))
+    print('Temps de la requête : %.3f seconde(s)' %(time2-time1))
+
+    # Print the result
     if len(collection_doc)==0 :
         print("Il n'y a pas de document correspondant à votre recherche.")
     else :
-        print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(collection_doc.__len__(),term_searched))
-        for docID in collection_doc :
-            print(collection.docID_doc[docID])
-    print("\n- - - - -\n/// Requête bouléenne ///")
-    request = input("Entrez une expression normale conjonctive sous le format ci-dessous.\nAND : * ; OR : + ; NOT : -\nExemple : 1*2+3*4+-5 qui signifie 1 AND (2 OR 3) AND (4 OR NOT(5))\n").lower()
-    time1 = time()
-    collection_doc = spelling_out_request(request, collection)
-    time2 = time()
-    print('Temps de la requête : %.2f seconde(s)' %(time2-time1))
-    if len(collection_doc)==0 :
-        print("Il n'y a pas de documents correspondant à votre recherche.")
-    else :
-        print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(collection_doc.__len__(), request))
+        print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(len(collection_doc),term_searched))
         for docID in collection_doc :
             print(collection.docID_doc[docID])
 
+    # Multiple words request
+    print("\n- - - - -\n"
+          "/// Requête bouléenne ///")
+    request = input("Entrez une expression normale conjonctive sous le format ci-dessous.\n"
+                    "AND : * ; OR : + ; NOT : -\n"
+                    "Exemple : 1*2+3*4+-5 qui signifie 1 AND (2 OR 3) AND (4 OR NOT(5))\n").lower()
+
+    # Search
+    time1 = time()
+    collection_doc = spelling_out_request(request, collection)
+    time2 = time()
+    print('Temps de la requête : %.3f seconde(s)' %(time2-time1))
+
+    # Print the result
+    if len(collection_doc)==0 :
+        print("Il n'y a pas de documents correspondant à votre recherche.")
+    else :
+        print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(len(collection_doc), request))
+        for docID in collection_doc :
+            print(collection.docID_doc[docID])
+
+def index_creation():
+    """Creation of the collection's index"""
+
+    print('Création de l\'index...')
+    with open('../Data/CACM/intermediate/collection_without_index.pickle', 'rb') as f:
+        collection = load(f)
+
+    time_index_1 = time()
+    collection.create_reversed_index_boolean()
+    time_index_2 = time()
+
+    with open('../Data/CACM/intermediate/collection_with_boolean_index', 'wb') as f:
+        dump(collection, f)
+    print('Index créé en %.2f secondes' % (time_index_2 - time_index_1))
+    return collection
+
 def spelling_out_request(request, collection):
+    """Function which takes a FNC request and returns a list of document"""
     conjunction_list = request.split("*")
     first = True
     final_list = []
@@ -48,8 +84,8 @@ def spelling_out_request(request, collection):
             final_list = intersection_list(final_list, clause_res)
     return final_list
 
-
 def boolean_search(term, collection):
+    """Function which takes a term and returns the document's list whose contains this term"""
     id_term = collection.id_term_method(term)
     if id_term == -1 :
         return []
@@ -57,6 +93,7 @@ def boolean_search(term, collection):
     return list_doc
 
 def b_or_search(term1, term2, collection):
+    """Function which takes two terms and returns the document's list whose contains one of this terms"""
     if isinstance(term1,str):
         list_doc_term1 = boolean_search(term1, collection)
     else :
@@ -68,6 +105,7 @@ def b_or_search(term1, term2, collection):
     return merge_sorted_list(list_doc_term1,list_doc_term2)
 
 def b_and_search(term1, term2, collection) :
+    """Function which takes two terms (or document's list) and returns the document's list whose contains the two terms"""
     if isinstance(term1,str):
         list_doc_term1 = boolean_search(term1, collection)
     else :
@@ -79,6 +117,7 @@ def b_and_search(term1, term2, collection) :
     return intersection_list(list_doc_term1,list_doc_term2)
 
 def b_not_search(term, collection) :
+    """Function which takes a term and returns the document's list whose doesn't contain this term"""
     res = collection.list_docID_all()
     id_term = collection.id_term_method(term)
     if id_term == -1 :
@@ -89,6 +128,7 @@ def b_not_search(term, collection) :
     return res
 
 def merge_sorted_list(list1, list2):
+    """Function which merges and sorts two document's lists"""
     res = []
     while (list1 != []) and (list2 != []):
         if int(list1[0]) < int(list2[0]):
@@ -105,6 +145,7 @@ def merge_sorted_list(list1, list2):
     return res
 
 def intersection_list(list1, list2):
+    """Function which intersects and sorts two document's lists"""
     res = []
     while (list1!=[]) and (list2!=[]):
         if list1[0]==list2[0] :
