@@ -1,7 +1,7 @@
 from CACM.A_collection_treatment import collection_treatment
 from CACM.B_heap_law import statistics
-from CACM.C_boolean_search import boolean_main, boolean_search
-from CACM.D_vectorial_search import vectorial_main
+from CACM.C_boolean_model import boolean_main, boolean_search
+from CACM.D_vectorial_model import vectorial_main
 
 from pickle import dump, load
 from time import time
