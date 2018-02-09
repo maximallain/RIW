@@ -1,12 +1,20 @@
 import operator
-import pickle
+from pickle import dump, load
 from math import log, sqrt
 from time import time
 
-def main_vectorial(collection) :
+def vectorial_main() :
+    """Main function of the vectorial model"""
+
+    # Index's creation
+    collection = index_creation()
+
+    # Request
+    query = input("Entrez une requête sous la forme d'une suite de termes séparés par des espaces :\n")
+
+    # Weighting choice
     answer = ''
     while answer not in [1, 2, 3]:
-        query = input("Entrez une requête sous la forme d'une suite de termes séparés par des espaces :\n")
         answer = input("Quelle type de pondération souhaitez-vous tester ?\n"
                        "1 - tf_idf\n"
                        "2 - tf_idf normalisé\n"
@@ -16,9 +24,13 @@ def main_vectorial(collection) :
         except ValueError:
             print("Veuillez entrer un chiffre entre 1 et 3.")
     number = answer
+
+    # Search
     time1 = time()
     res = query_search(query = query, collection = collection, number = number)
     time2 = time()
+
+    # Print the result
     if len(res) == 0:
         print("Il n'y a pas de document correspondant à votre recherche.")
     else:
@@ -30,9 +42,24 @@ def main_vectorial(collection) :
             print(collection.docID_doc[docID[0]])
             i +=1
 
+def index_creation():
+    """Creation of the collection's index"""
+    print('Création de l\'index...')
+    with open('../Data/CACM/intermediate/collection_without_index.pickle', 'rb') as f:
+        collection = load(f)
+
+    time_index_1 = time()
+    collection.create_reversed_index_vectorial()
+    time_index_2 = time()
+
+    with open('../Data/CACM/intermediate/collection_with_boolean_index', 'wb') as f:
+        dump(collection, f)
+    print('Index créé en %.2f secondes' % (time_index_2 - time_index_1))
+    return collection
 
 
 def query_search(query, collection, number):
+    """Function which takes a request and returns a sorted documents' list"""
     terms_list = query.split(" ")
     dict_docID_weight = {"size": 0, "docID_weight": {}}
     for term in terms_list :
@@ -43,7 +70,8 @@ def query_search(query, collection, number):
         res[doc] = cos(weight_list)
     return sorted(res.items(), reverse=True, key=operator.itemgetter(1))
 
-def cos(list) :
+def cos(list):
+    """Function which defines the similarity of request in a document"""
     num = 0
     den = 0
     for elt in list :
@@ -52,7 +80,8 @@ def cos(list) :
     return num/(sqrt(den)*sqrt(len(list)))
 
 
-def add_list_in_dict(dict, list2) :
+def add_list_in_dict(dict, list2):
+    """Function which adds a list of tuple (document, term's weight in this document) of a term to the main dictionnary"""
     size = dict["size"] + 1
     dict["size"] = size
     for elt in list2 :
@@ -67,6 +96,7 @@ def add_list_in_dict(dict, list2) :
 
 
 def term_search(term, collection, number):
+    """Function which return a list of documents which contain the term. The list is sorted by weight"""
     N = collection.doc_number
     id_term = collection.id_term_method(term)
     if id_term == -1 :
@@ -83,6 +113,7 @@ def term_search(term, collection, number):
     return sorted_list
 
 def weight(N, tf_td, dft, doc_len, max_tf_in_doc, number):
+    """Function which return the chosen weight's function"""
     if number == 1 :
         return tf_idf(N, tf_td, dft)
     if number == 2 :
@@ -92,12 +123,15 @@ def weight(N, tf_td, dft, doc_len, max_tf_in_doc, number):
 
 
 def tf_idf(N, tf_td, dft) :
+    """Function tf_idf"""
     return (1 + log(tf_td,10))*(log((N/dft),10))
 
 def normalized_tf_idf(N, tf_td, dft, doc_len) :
+    """Function tf_idf normalized"""
     return tf_idf(N, tf_td, dft)/doc_len
 
 def normalized_frequence(tf_td, max_tf_in_doc) :
+    """Function frequence normalized"""
     return tf_td/max_tf_in_doc
 
 
@@ -114,13 +148,13 @@ collection.create_reversed_index_vectorial()
 
 with open('../Data/CACM/collection_with_weight_index.pickle', 'wb') as f:
     pickle.dump(collection, f)
-"""
+
 with open('../Data/CACM/collection_with_weight_index.pickle', 'rb') as f:
-    collection = pickle.load(f)
+    collection = load(f)
 
-main_vectorial(collection)
+vectorial_main(collection)
 
-""" TEST A SUPPRIMER
+TEST A SUPPRIMER
 query = "algorithm computer time"
 number = 1
 dict_to_print = query_search(query,collection,number)

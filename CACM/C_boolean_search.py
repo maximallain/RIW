@@ -49,7 +49,6 @@ def boolean_main() :
 
 def index_creation():
     """Creation of the collection's index"""
-
     print('Création de l\'index...')
     with open('../Data/CACM/intermediate/collection_without_index.pickle', 'rb') as f:
         collection = load(f)
