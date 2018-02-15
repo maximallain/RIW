@@ -14,15 +14,15 @@ while answer not in ['o','n'] :
     answer = input("Voulez-vous recréer l'index inversé ? (o/n)\n").lower()
     if answer == 'o' :
         print('Création de l\'index...')
-        with open('../Data/CACM/collection_without_index.pickle', 'rb') as f:
+        with open('../Data/CACM/intermediate/collection_without_index.pickle', 'rb') as f:
             collection = load(f)
         time_index_1 = time()
         collection.create_reversed_index_boolean()
         time_index_2 = time()
-        with open('../Data/CACM/collection_with_boolean_index', 'wb') as f:
+        with open('../Data/CACM/intermediate/collection_with_boolean_index', 'wb') as f:
             dump(collection, f)
         print('Index créé en %.2f secondes' % (time_index_2-time_index_1))
-with open('../Data/CACM/collection_with_boolean_index', 'rb') as f:
+with open('../Data/CACM/intermediate/collection_with_boolean_index', 'rb') as f:
     collection = load(f)
 
 res1 = boolean_search("graph", collection)
@@ -113,9 +113,9 @@ print("////////////////////////////////////")
 print("////////// BOOLEAN INDEX ///////////")
 print("////////////////////////////////////")
 boolean_main()
-"""
+
 print("////////////////////////////////////")
 print("///////// VECTORIAL INDEX //////////")
 print("////////////////////////////////////")
 vectorial_main()
-
+"""

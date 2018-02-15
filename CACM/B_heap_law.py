@@ -1,6 +1,6 @@
 from CACM.A_collection_treatment import lecture_doc, separate_doc
 from Functions.functions import calcul_of_b, calcul_of_k, calcul_de_voc, list_plot, logList
-from CACM.models.collection_class import Collection
+from models.collection_class import Collection
 
 from pickle import dump, load
 import matplotlib.pyplot as plt
@@ -72,7 +72,7 @@ def create_collection_div_by_2(path_r_div = "../Data/CACM/intermediate/cacm.div_
     list_doc = separate_doc(path_w_div)
     for doc in list_doc:
         collection_div2.add_doc(doc)
-        doc.tokenization()
+        doc.tokenization_CACM()
         doc.vocabulary_update()
         collection_div2.add_tokens(doc.tokens)
     collection_div2.vocabulary_update()
