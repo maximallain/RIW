@@ -1,5 +1,5 @@
-from CACM.models.collection_class import Collection
-from CACM.models.document_class import Document
+from models.collection_class import Collection
+from models.document_class import Document
 import pickle
 
 def collection_treatment(path = "../Data/CACM/cacm.all") :
@@ -16,7 +16,7 @@ def collection_treatment(path = "../Data/CACM/cacm.all") :
     collection = Collection()
     for doc in list_doc :
         collection.add_doc(doc)
-        doc.tokenization()
+        doc.tokenization_CACM()
         doc.vocabulary_update()
         collection.add_tokens(doc.tokens)
 
