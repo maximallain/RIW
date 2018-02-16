@@ -69,36 +69,52 @@ On donne un exemple de recherche effectuée dans le terminal avec l'algorithme b
 >/// Recherche d'un seul mot ///
 
 >Entrez un mot :
+
 >computer
 
 >Temps de la requête : 0.000 seconde(s)
-Voici les 622 documents dans lesquelles apparait le mot computer :
+
+>Voici les 622 documents dans lesquelles apparait le mot computer :
 
 >Doc N°4 - Glossary of Computer Engineering and Programming Terminology
-Doc N°7 - Glossary of Computer Engineering and Programming Terminology
-Doc N°10 - Glossary of Computer Engineering and Programming Terminology
-Doc N°13 - Glossary of Computer Engineering and Programming Terminology
-Doc N°19 - Glossary of Computer Engineering and Programming Terminology
-...
+
+>Doc N°7 - Glossary of Computer Engineering and Programming Terminology
+
+>Doc N°10 - Glossary of Computer Engineering and Programming Terminology
+
+>Doc N°13 - Glossary of Computer Engineering and Programming Terminology
+
+>Doc N°19 - Glossary of Computer Engineering and Programming Terminology
+
+>...
 
 ### Expression sous Forme Normale Conjonctive
 
 >/// Requête bouléenne ///
-Entrez une expression normale conjonctive sous le format ci-dessous.
-AND : *
-OR : +
-NOT : -
-Exemple : 1*2+3*4+-5 qui signifie 1 AND (2 OR 3) AND (4 OR NOT(5))
+
+>Entrez une expression normale conjonctive sous le format ci-dessous.
+
+>AND : *
+
+>OR : +
+
+>NOT : -
+
+>Exemple : 1*2+3*4+-5 qui signifie 1 AND (2 OR 3) AND (4 OR NOT(5))
 
 >algorithm\*graph+science\*-numerical
 
 >Temps de la requête : 0.035 seconde(s)
+
 >Voici les 43 documents dans lesquelles apparait le mot algorithm\*graph+science\*-numerical :
 
 >Doc N°1481 - Graph Plotter (Algorithm 278 \[J6\])
-Doc N°1504 - Algorithms for Finding a Fundamental Set of Cycles for an Undirected Linear Graph
-Doc N°1727 - One Way of Estimating Frequencies of Jumps in a Program
-...
+
+>Doc N°1504 - Algorithms for Finding a Fundamental Set of Cycles for an Undirected Linear Graph
+
+>Doc N°1727 - One Way of Estimating Frequencies of Jumps in a Program
+
+>...
 
 ## 4. <a name="vect"></a>Moteur de recherche vectoriel
 
@@ -118,28 +134,33 @@ On donne un exemple de recherche effectuée dans le terminal avec l'algorithme v
 >analysis
 
 >Quelle type de pondération souhaitez-vous tester ?
+
 >1 - tf_idf
+
 >2 - tf_idf normalisé
+
 >3 - fréquence normalisée
 
 >1
 
 >Voici les 10 documents les plus pertinents pour la requête suivante 'analysis'
+
 >274 documents trouvés en 0.031 seconde(s):
 
 >Doc N°1404 - Computational Aspects of Multiple Covariance Analysis on a Multifactor Structure
->Doc N°1855 - A Program for the Syntactic Analysis of English Sentences
->Doc N°2050 - Automatic Parsing for Content Analysis
->Doc N°2923 - High-Level Data Flow Analysis
->Doc N°2494 - A Computer Generated Aid for Cluster Analysis
->Doc N°2719 - Mechanical Program Analysis
->Doc N°1679 - A Fast Fourier Transform Algorithm for Real-Valued Series
->Doc N°1989 - Transition Network Grammars for Natural Language Analysis
->Doc N°2437 - General Performance Analysis of Key-to-Address Transformation Methods Using an Abstract File  Concept
 
-<<<<<<< HEAD
-=======
-NOTA BENE: Les valeurs suivantes ne sont pas présentes dans le fichier qrel.text pour juger de la pertinence de nos requêtes:
-34,35,41,46,47,50,51,52,53,54,55,56. Dans ce cas là on indique que les fichiers pertinents pour cette requêtes étaient l'ensemble vide [].
-, nous trouvons une taille de vocabulaire de 22045
->>>>>>> 6bcc5d88ea36e453a3693d681e7f1169974dab30
+>Doc N°1855 - A Program for the Syntactic Analysis of English Sentences
+
+>Doc N°2050 - Automatic Parsing for Content Analysis
+
+>Doc N°2923 - High-Level Data Flow Analysis
+
+>Doc N°2494 - A Computer Generated Aid for Cluster Analysis
+
+>Doc N°2719 - Mechanical Program Analysis
+
+>Doc N°1679 - A Fast Fourier Transform Algorithm for Real-Valued Series
+
+>Doc N°1989 - Transition Network Grammars for Natural Language Analysis
+
+>Doc N°2437 - General Performance Analysis of Key-to-Address Transformation Methods Using an Abstract File  Concept
