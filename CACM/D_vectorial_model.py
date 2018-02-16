@@ -4,7 +4,6 @@ from math import log, sqrt
 from time import time
 
 path_wo_index = '../Data/CACM/intermediate/collection_without_index.pickle'
-path_w_index = '../Data/CACM/intermediate/collection_with_vectorial_index'
 
 def vectorial_main() :
     """Main function of the vectorial model"""
@@ -59,10 +58,6 @@ def index_creation():
     time_index_1 = time()
     collection.create_reversed_index_vectorial()
     time_index_2 = time()
-
-    # Collection's writing
-    with open(path_w_index, 'wb') as f:
-        dump(collection, f)
 
     print('Index créé en %.2f secondes' % (time_index_2 - time_index_1))
 

@@ -30,7 +30,7 @@ def boolean_main() :
     print("\n- - - - -\n"
           "/// Requête bouléenne ///")
     request = input("Entrez une expression normale conjonctive sous le format ci-dessous.\n"
-                    "AND : * ; OR : + ; NOT : -\n"
+                    "AND : *\nOR : +\nNOT : -\n"
                     "Exemple : 1*2+3*4+-5 qui signifie 1 AND (2 OR 3) AND (4 OR NOT(5))\n").lower()
 
     # Search
@@ -57,9 +57,8 @@ def index_creation():
     collection.create_reversed_index_boolean()
     time_index_2 = time()
 
-    with open('../Data/CACM/intermediate/collection_with_boolean_index', 'wb') as f:
-        dump(collection, f)
     print('Index créé en %.2f secondes' % (time_index_2 - time_index_1))
+
     return collection
 
 def spelling_out_request(request, collection):
@@ -157,62 +156,3 @@ def intersection_list(list1, list2):
             list2=list2[1:]
     return res
 
-"""answer = ''
-while answer not in ['o','n'] :
-    answer = input("Voulez-vous recréer l'index inversé ? (o/n)").lower()
-    if answer == 'o' :
-        print('Création de l\'index...')
-        with open('../Data/CACM/collection_without_index.pickle', 'rb') as f:
-            collection = pickle.load(f)
-        time_index_1 = time()
-        collection.create_reversed_index_boolean()
-        time_index_2 = time()
-        with open('../Data/CACM/collection_with_boolean_index', 'wb') as f:
-            pickle.dump(collection, f)
-        print('Index créé en %.2f secondes' % (time_index_2-time_index_1))
-
-
-
-with open('../Data/CACM/collection_with_boolean_index', 'rb') as f:
-    collection = pickle.load(f)
-
-
-
-boolean_main(collection)
-
-
-
-# TESTS
-print(len(boolean_search("computer", collection)))
-print(len(boolean_search("systems", collection)))
-print(len(boolean_search("program", collection)))
-print(len(b_or_search("program", "systems", collection)))
-print(len(b_and_search("computer", b_or_search("program", "systems", collection), collection)))
-req1 = "systems*-computer"
-req2 = "systems*program"
-req3 = "systems*program+-computer"
-res1 = b_not_search("computer", collection)
-res2 = boolean_search("systems", collection)
-res3 = boolean_search("program", collection)
-
-print(res2)
-print(res1)
-print(res3)
-collection_doc1 = spelling_out_request(req1, collection)
-print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(collection_doc1.__len__(), req1))
-for docID in collection_doc1:
-    print(collection.docID_doc[docID])
-
-collection_doc2 = spelling_out_request(req2, collection)
-collection_doc2bis = b_or_search("systems","program",collection)
-print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(collection_doc2.__len__(), req2))
-for docID in collection_doc2:
-    print(collection.docID_doc[docID])
-collection_doc3 = spelling_out_request(req3, collection)
-print("Voici les {} documents dans lesquelles apparait le mot {} :\n".format(collection_doc3.__len__(), req3))
-for docID in collection_doc3:
-    print(collection.docID_doc[docID])
-collection_doc4 = merge_sorted_list(collection_doc1,collection_doc2)
-print("Doit correspondre avec {}".format(len(collection_doc4)))
-for docID in collection_doc4:
-    print(collection.docID_doc[docID])"""

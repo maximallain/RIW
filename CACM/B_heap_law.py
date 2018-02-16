@@ -1,5 +1,5 @@
 from CACM.A_collection_treatment import lecture_doc, separate_doc
-from Functions.functions import calcul_of_b, calcul_of_k, calcul_de_voc, list_plot, logList
+from Functions.functions import calcul_of_b, calcul_of_k, calcul_of_voc, list_plot, list_log
 from models.collection_class import Collection
 
 from pickle import dump, load
@@ -39,14 +39,14 @@ def statistics() :
 
     # Vocabulary size's calculation for a 1 million tokens' collection
     tok3 = 1000000
-    voc3 = int(calcul_de_voc(tok3,k,b))
+    voc3 = int(calcul_of_voc(tok3,k,b))
     print("Question 4\n"
           "Supposons le nombre de token a un million, nous trouvons une taille de vocabulaire de "+str(voc3)+"\n")
 
     # Plot
     list_to_plot = list_plot(collection.vocabulary)
-    list_log0 = logList(list_to_plot[0])
-    list_log1 = logList(list_to_plot[1])
+    list_log0 = list_log(list_to_plot[0])
+    list_log1 = list_log(list_to_plot[1])
     plt.plot(list_to_plot[0], list_to_plot[1])
     plt.title('CACM : frequence vs rang')
     plt.show()

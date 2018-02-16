@@ -1,4 +1,4 @@
-from Functions.functions import vocabulary, list_termID_docID, list_termID_docID_frequence
+from Functions.functions import vocabulary
 
 
 class Collection() :
@@ -12,7 +12,6 @@ class Collection() :
         self.termID_term = None
         self.docID_doc = None
         self.reversed_index = None
-
 
     def add_tokens(self, tokens_list):
         self.tokens_list.extend(tokens_list)
@@ -51,6 +50,22 @@ class Collection() :
             res.append(document.id)
         return res
 
+    def list_termID_docID(self):
+        tuple_list = []
+        for id_term, term in self.termID_term.items():
+            for id_doc, doc in self.docID_doc.items():
+                if term in doc.tokens:
+                    tuple_list.append((id_term, id_doc))
+        return tuple_list
+
+    def list_termID_docID_frequence(self):
+        tuple_list = []
+        for id_term, term in self.termID_term.items():
+            for id_doc, doc in self.docID_doc.items():
+                if term in doc.vocabulary:
+                    tuple_list.append((id_term, id_doc, doc.vocabulary[term]))
+        return tuple_list
+
     def collection_frequence_term(self,term):
         for elt in self.vocabulary :
             if elt[0] == term :
@@ -64,7 +79,7 @@ class Collection() :
         return -1
 
     def create_reversed_index_boolean(self):
-        list = list_termID_docID(self.termID_term, self.docID_doc)
+        list = self.list_termID_docID()
         dict_res = {}
         for elt in list :
             if elt[0] not in dict_res :
@@ -74,7 +89,7 @@ class Collection() :
         self.reversed_index = dict_res
 
     def create_reversed_index_vectorial(self):
-        list = list_termID_docID_frequence(self.termID_term, self.docID_doc)
+        list = self.list_termID_docID_frequence()
         dict_res = {}
         for elt in list:
             if elt[0] not in dict_res:
@@ -84,5 +99,5 @@ class Collection() :
         self.reversed_index = dict_res
 
     def __repr__(self):
-        return "Doc_list : {}\nTokens_list : {}\nTokens_number : {}\nVocabulary :{}\nVocabulary_size : {}".format(self.doc_list, self.tokens_list, self.tokens_number(), self.vocabulary, self.vocabulary_size)
+        return "Collection n°{}\nDoc_list : {}\nTokens_list : {}\nTokens_number : {}\nVocabulary :{}\nVocabulary_size : {}".format(self.id, self.doc_list, self.tokens_list, self.tokens_number(), self.vocabulary, self.vocabulary_size)
 
