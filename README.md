@@ -73,7 +73,7 @@ Nous reproduisons ici les courbes de Zipf que nous affichons en paramètrant la 
 
   >QUESTION 5: Chargement des graphs
 
-<img src="results/cs.png" alt="Drawing" style="width: 2px;"/>
+![alt text](results/cs.png)
 
 Pour le corpus CS 276 on obtient les résultats suivants:
 
