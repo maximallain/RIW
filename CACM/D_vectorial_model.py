@@ -3,6 +3,9 @@ from pickle import dump, load
 from math import log, sqrt
 from time import time
 
+path_wo_index = '../Data/CACM/intermediate/collection_without_index.pickle'
+path_w_index = '../Data/CACM/intermediate/collection_with_vectorial_index'
+
 def vectorial_main() :
     """Main function of the vectorial model"""
 
@@ -32,9 +35,10 @@ def vectorial_main() :
 
     # Print the result
     if len(res) == 0:
-        print("Il n'y a pas de document correspondant à votre recherche.")
+        print("Il n'y a pas de document correspondant à votre recherche.\nTemps de la requête : %.3f seconde(s)" % (time2-time1))
     else:
-        print("Voici les 10 documents les plus pertinents pour la requête suivante '%s'\n (%d documents trouvés en %.3f seconde(s):\n" %(query,res.__len__(),(time2-time1)))
+        print("Voici les 10 documents les plus pertinents pour la requête suivante '%s'\n"
+              "%d documents trouvés en %.3f seconde(s):\n" %(query,res.__len__(),(time2-time1)))
         i = 0
         for docID in res:
             if i == 9 :
@@ -42,19 +46,26 @@ def vectorial_main() :
             print(collection.docID_doc[docID[0]])
             i +=1
 
+
 def index_creation():
     """Creation of the collection's index"""
+
     print('Création de l\'index...')
-    with open('../Data/CACM/intermediate/collection_without_index.pickle', 'rb') as f:
+
+    # Collection's lecture
+    with open(path_wo_index, 'rb') as f:
         collection = load(f)
 
     time_index_1 = time()
     collection.create_reversed_index_vectorial()
     time_index_2 = time()
 
-    with open('../Data/CACM/intermediate/collection_with_boolean_index', 'wb') as f:
+    # Collection's writing
+    with open(path_w_index, 'wb') as f:
         dump(collection, f)
+
     print('Index créé en %.2f secondes' % (time_index_2 - time_index_1))
+
     return collection
 
 
@@ -100,7 +111,8 @@ def term_search(term, collection, number):
     N = collection.doc_number
     id_term = collection.id_term_method(term)
     if id_term == -1 :
-        print("Le terme n'est pas dans la collection")
+        print("Le terme %s n'est pas dans la collection" % term)
+        return []
     dft = collection.vocabulary[term]
     list_tuple_docID_frequence = collection.reversed_index[id_term]
     dict_docID_weight = {}
@@ -133,35 +145,3 @@ def normalized_tf_idf(N, tf_td, dft, doc_len) :
 def normalized_frequence(tf_td, max_tf_in_doc) :
     """Function frequence normalized"""
     return tf_td/max_tf_in_doc
-
-
-
-"""
-path = "../Data/CACM/cacm.all"
-#lecture_doc(path)
-
-with open('../Data/CACM/collection_without_index.pickle', 'rb') as f:
-    collection = pickle.load(f)
-
-#index_vectorial = Index("Reversed Index with Frequency")
-collection.create_reversed_index_vectorial()
-
-with open('../Data/CACM/collection_with_weight_index.pickle', 'wb') as f:
-    pickle.dump(collection, f)
-
-with open('../Data/CACM/collection_with_weight_index.pickle', 'rb') as f:
-    collection = load(f)
-
-vectorial_main(collection)
-
-TEST A SUPPRIMER
-query = "algorithm computer time"
-number = 1
-dict_to_print = query_search(query,collection,number)
-print(dict_to_print)
-#TEST ADD LIST IN DICT
-list = [(1,0.5798),(2,0.5646), (3,0.829)]
-dict = {"size" : 3, "docID_weight" : {1 : [0,0.5,0.6], 2 : [0.2,0.4,0.8]}}
-add_list_in_dict(dict, list)
-print(dict)
-"""

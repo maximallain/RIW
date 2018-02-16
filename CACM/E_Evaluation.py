@@ -1,9 +1,3 @@
-
-# On choisit d'évaluer le modèle booléen
-# We choose two words : computer and algorithm
-# We're going to find all their precision documents P
-# We're going to use the number of all the collection A
-# For every document, if it's pertinent, pi += 1 and stock the point R[i] = pi/R and P[i] = pi/i
 from pickle import load
 import matplotlib.pyplot as plt
 
@@ -14,6 +8,8 @@ from Functions.functions import list_termID_docID
 with open('../Data/CACM/intermediate/collection_with_boolean_index', 'rb') as f:
     collection = load(f)
 term1 = ''
+
+def evaluation_main()
 
 def recover_relevant_documents(term) :
     return len(boolean_search(term, collection))

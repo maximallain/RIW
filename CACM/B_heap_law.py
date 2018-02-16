@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 def statistics() :
     """Calculation of heap law's coefficients k & b"""
-    #create_collection_div_by_2()
+    create_collection_div_by_2()
 
     # Lecture of the two collections
     path_pickle = "../Data/CACM/intermediate/collection_without_index.pickle"
