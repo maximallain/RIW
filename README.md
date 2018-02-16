@@ -37,7 +37,6 @@ Réponse obtenue dans un terminal lors d'un test:
 ![alt text](results/CACM.png)
 ![alt text](results/CACM_log.png)
 
-
 Pour le corpus CS 276 on obtient les résultats suivants:
 
   >QUESTION 1: Nombre de tokens dans CS276: 15 898 451
@@ -138,3 +137,9 @@ On donne un exemple de recherche effectuée dans le terminal avec l'algorithme v
 >Doc N°1989 - Transition Network Grammars for Natural Language Analysis
 >Doc N°2437 - General Performance Analysis of Key-to-Address Transformation Methods Using an Abstract File  Concept
 
+<<<<<<< HEAD
+=======
+NOTA BENE: Les valeurs suivantes ne sont pas présentes dans le fichier qrel.text pour juger de la pertinence de nos requêtes:
+34,35,41,46,47,50,51,52,53,54,55,56. Dans ce cas là on indique que les fichiers pertinents pour cette requêtes étaient l'ensemble vide [].
+, nous trouvons une taille de vocabulaire de 22045
+>>>>>>> 6bcc5d88ea36e453a3693d681e7f1169974dab30
